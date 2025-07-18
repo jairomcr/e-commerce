@@ -1,4 +1,5 @@
 E-commerce en Angular
+
 📌 Descripción del Proyecto
 Este es un sitio web de e-commerce desarrollado con Angular que permite a los usuarios:
 
