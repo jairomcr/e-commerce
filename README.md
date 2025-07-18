@@ -1,51 +1,38 @@
-# Angular E-commerce Template 🛍️
+E-commerce en Angular
+📌 Descripción del Proyecto
+Este es un sitio web de e-commerce desarrollado con Angular que permite a los usuarios:
 
-This is a modern, minimalist but functioning responsive e-commerce template built with **Angular** and **TailwindCSS**. It's designed to be a starting point for building full-featured e-commerce applications. The template includes a clean and customizable design, ideal for minimalist online stores.
+Explorar catálogo de productos
 
-Checkout and explore the Live website: [https://angular-tailwind-e-commerce-template.vercel.app](https://angular-tailwind-e-commerce-template.vercel.app)
+Filtrar y buscar artículos
 
-Home Screen:
+Gestionar carrito de compras
 
-![Img1](/public/imgs/img1.png)
+Realizar proceso de checkout
 
-Checkout Screen:
+Ver historial de pedidos (para usuarios registrados)
 
-![Img2](/public/imgs/img2.png)
+🚀 Tecnologías Utilizadas
+Frontend: Angular (v19)
 
-Product Details Screen:
+Estilos: SCSS/TailwindCSS 
 
-![Img3](/public/imgs/img3.png)
+State Management: NgRx/RxJS 
 
-## Features 🚀
+Backend: API REST (https://fakestoreapi.com/)
 
-- **Responsive Layout**: Fully responsive design optimized for mobile, tablet, and desktop.
-- **Bring Your Own API**: Easy to integrate with your own backend API.
-- **Angular Components**: Modular structure with reusable Angular components.
-- **TailwindCSS**: Utility-first CSS framework for fast styling and leverage with **Daisy UI**.
-- **Product Listings**: Showcase products with detailed views.
-- **Shopping Cart**: Add products to the cart, view items, and proceed to checkout.
-- **Favorite Product**: Favorite product, add and remove from favorite items.
-- **Customizable Design**: Easily change colors, fonts, and styles using TailwindCSS.
-- **Light/Dark theme**: Support Light mode and Dark mode by default.
-- **LocalStorage items**: Shopping cart items, favorite items are stored in localStorage.
-- **Pre-configured Environment**: Ready-to-use Angular and TailwindCSS setup for fast development.
+Testing: Jasmine/Karma
 
-## Tech Stack
+🛠️ Requisitos del Sistema
+Node.js v20
 
-- **Angular 19 (Signal + SPA)**
-- **TailwindCSS**
-- **Daisy UI**
-- **TypeScript**
-- **Font Awesome**
-- **FakeStore API** (For prototyping)
+npm v9 o yarn
 
-## Contribution
+Angular CLI instalado globalmente (npm install -g @angular/cli)
 
-Feel free to fork this repository and contribute feature-request, improvements, bug fixes.
-To contribute:
+🔧 Instalación
+Clonar el repositorio:
 
-1. Fork the repository
-2. Create a new branch (`git checkout -b feature-branch`)
-3. Commit your changes (`git commit -am 'Add new feature'`)
-4. Push to the branch (`git push origin feature-branch`)
-5. Create a new pull request
+bash
+git clone https://github.com/jairomcr/e-commerce.git
+cd e-commerce
