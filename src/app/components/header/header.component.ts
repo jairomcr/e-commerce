@@ -6,13 +6,18 @@ import {
     faHamburger,
     faHeart,
     faStore,
-    IconDefinition,
 } from '@fortawesome/free-solid-svg-icons';
 import { ShoppingCartStore } from '../../state/shopping-cart.store';
+import { SearchFormComponent } from '../search-component/search-component';
 
 @Component({
     selector: 'app-header',
-    imports: [FontAwesomeModule, RouterLink, RouterLinkActive],
+    imports: [
+        FontAwesomeModule,
+        RouterLink,
+        RouterLinkActive,
+        SearchFormComponent,
+    ],
     template: `
         <header
             class="w-full py-4 top-0 fixed bg-clip-padding backdrop-filter backdrop-blur-xl z-50 border-b border-b-base-300"
@@ -43,6 +48,7 @@ import { ShoppingCartStore } from '../../state/shopping-cart.store';
                         }
                     </div>
                 </div>
+                <app-search-form />
                 <div class="hidden lg:flex items-center gap-x-2">
                     <a
                         routerLink="/favorite-items"
@@ -67,10 +73,11 @@ import { ShoppingCartStore } from '../../state/shopping-cart.store';
                         </div>
                         }
                     </a>
-                    <select data-choose-theme>
+                    <select data-choose-theme class="rounded-lg p-1">
                         <option value="dark">Default</option>
                         <option value="dark">Dark</option>
                         <option value="light">Light</option>
+                        <option value="night">Night</option>
                     </select>
                 </div>
                 <div class="block lg:hidden dropdown dropdown-end">
@@ -125,6 +132,9 @@ import { ShoppingCartStore } from '../../state/shopping-cart.store';
     .active-link {
     color: "#d1d5dc";
     text-decoration: underline;
+    }
+    select {
+        background: var(--root-bg, var(--color-base-100))
     }
 `,
 })

@@ -5,9 +5,11 @@ import { ProductCardSkeletonComponent } from '../../components/product-card-skel
 import { Meta, Title } from '@angular/platform-browser';
 import { FooterComponent } from '../../components/footer/footer.component';
 import { Product } from '../../../type';
+import { SearchParamsStore } from '../../state/search-params.store';
 
 @Component({
     selector: 'app-jewelry',
+    standalone: true,
     imports: [
         ProductCardComponent,
         ProductCardSkeletonComponent,
@@ -27,11 +29,16 @@ import { Product } from '../../../type';
             <div
                 class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 mx-auto max-w-7xl gap-6"
             >
-                @for (product of productsResource.value(); track product.id) {
+                @for (product of filteredProducts(); track product.id) {
                 <app-product-card [product]="product" />
+                } @empty {
+                <div class="col-span-full text-center py-10">
+                    <p class="text-lg text-gray-600">
+                        No jewelry matches your search criteria
+                    </p>
+                </div>
                 }
             </div>
-
             }
         </div>
         <app-footer />
@@ -55,6 +62,7 @@ export class JewelryComponent {
 
     private readonly productCategory = 'jewelery';
     private readonly apiService = inject(ApiService);
+    private readonly searchParamsStore = inject(SearchParamsStore);
 
     productsResource = resource({
         loader: () =>
@@ -63,6 +71,24 @@ export class JewelryComponent {
                     .getProductsDetails(this.productCategory)
                     .subscribe(res)
             ),
+    });
+
+    filteredProducts = computed(() => {
+        const products = this.productsResource.value() ?? [];
+        const { titleParam, minPriceParam, maxPriceParam } =
+            this.searchParamsStore.state();
+
+        return products.filter((product) => {
+            const titleMatch =
+                !titleParam ||
+                product.title.toLowerCase().includes(titleParam.toLowerCase());
+            const minPriceMatch =
+                minPriceParam === null || product.price >= minPriceParam;
+            const maxPriceMatch =
+                maxPriceParam === null || product.price <= maxPriceParam;
+
+            return titleMatch && minPriceMatch && maxPriceMatch;
+        });
     });
 
     isLoading = computed(() => this.productsResource.isLoading());

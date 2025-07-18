@@ -5,9 +5,12 @@ import { ProductCardSkeletonComponent } from '../../components/product-card-skel
 import { Meta, Title } from '@angular/platform-browser';
 import { FooterComponent } from '../../components/footer/footer.component';
 import { Product } from '../../../type';
+import { SearchParamsStore } from '../../state/search-params.store';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'app-home',
+    standalone: true,
     imports: [
         ProductCardComponent,
         ProductCardSkeletonComponent,
@@ -27,8 +30,14 @@ import { Product } from '../../../type';
             <div
                 class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 mx-auto max-w-7xl gap-6"
             >
-                @for (product of productsResource.value(); track product.id) {
+                @for (product of filteredProducts(); track product.id) {
                 <app-product-card [product]="product"></app-product-card>
+                } @empty {
+                <div class="col-span-full text-center py-10">
+                    <p class="text-lg text-gray-600">
+                        No products match your search criteria
+                    </p>
+                </div>
                 }
             </div>
             }
@@ -53,12 +62,38 @@ export class HomeComponent {
     }
 
     private apiService = inject(ApiService);
+    private searchParamsStore = inject(SearchParamsStore);
 
+    // Load all products
     productsResource = resource({
         loader: () =>
             new Promise<Product[] | undefined>((res) =>
-                this.apiService.getProductsDetails().subscribe(res)
+                this.apiService.getProducts().subscribe(res)
             ),
+    });
+
+    // Filter products based on search params
+    filteredProducts = computed(() => {
+        const products = this.productsResource.value() ?? [];
+        const { titleParam, minPriceParam, maxPriceParam } =
+            this.searchParamsStore.state();
+
+        return products.filter((product) => {
+            // Filter by title
+            const titleMatch =
+                !titleParam ||
+                product.title.toLowerCase().includes(titleParam.toLowerCase());
+
+            // Filter by min price
+            const minPriceMatch =
+                minPriceParam === null || product.price >= minPriceParam;
+
+            // Filter by max price
+            const maxPriceMatch =
+                maxPriceParam === null || product.price <= maxPriceParam;
+
+            return titleMatch && minPriceMatch && maxPriceMatch;
+        });
     });
 
     isLoading = computed(() => this.productsResource.isLoading());
