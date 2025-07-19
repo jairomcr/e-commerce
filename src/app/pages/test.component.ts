@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, effect, inject } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
-import { ApiService } from '../services/api-rx.service';
+import { ApiService } from '../core/services/api-rx.service';
 import { Observable } from 'rxjs';
 import { Product } from '../../type';
 import { AsyncPipe } from '@angular/common';

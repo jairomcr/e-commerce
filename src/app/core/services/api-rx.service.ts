@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Product } from '../../type';
+import { Product } from '../../../type';
 import { Observable, forkJoin, mergeMap, catchError, of, map } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
@@ -53,7 +53,7 @@ export class ApiService {
             : `${this.API_URL}/products?limit=${limit}`;
 
         return this.http.get<Product[]>(endpoint).pipe(
-            catchError(() => of([])) // Return empty array on error
+            catchError(() => of([])) 
         );
     }
 }

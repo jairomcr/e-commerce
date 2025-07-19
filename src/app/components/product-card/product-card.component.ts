@@ -1,4 +1,4 @@
-import { Component, computed, inject, input } from '@angular/core';
+import { Component, computed, inject, input,ChangeDetectionStrategy } from '@angular/core';
 import { Product } from '../../../type';
 import {
     faEye,
@@ -6,13 +6,16 @@ import {
     faCartShopping,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { ShoppingCartStore } from '../../state/shopping-cart.store';
+import { ShoppingCartStore } from '../../store/shopping-cart.store';
 import { Router } from '@angular/router';
-import { FavoriteItemsStore } from '../../state/favorite-items.store';
+import { FavoriteItemsStore } from '../../store/favorite-items.store';
+import { ShortDescriptionPipe } from '../../shared/pipes/short-description.pipe';
+import { ClickLoggerDirective } from '../../shared/directives/click-logger.directive';
 
 @Component({
     selector: 'app-product-card',
-    imports: [FontAwesomeModule],
+    imports: [FontAwesomeModule,ShortDescriptionPipe,ClickLoggerDirective],
+    changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
         <div
             class="card hover:bg-base-200 transition-all bg-base-100 w-full h-full shadow-sm"
@@ -29,10 +32,12 @@ import { FavoriteItemsStore } from '../../state/favorite-items.store';
                     {{ product()?.title }}
                 </h2>
                 <h3 class="text-lg text-green-500">$ {{ product()?.price }}</h3>
-
-                <p class="line-clamp-3">
-                    {{ product()?.description }}
-                </p>
+                @let p = product();
+                @if (p) {
+                    <p class="line-clamp-3">
+                        {{ p.description | shortDescription:20 }}
+                    </p>
+                }
                 <div class="card-actions mt-4 w-full">
                     <div
                         class="flex items-center gap-x-2 w-full justify-between"
@@ -69,6 +74,8 @@ import { FavoriteItemsStore } from '../../state/favorite-items.store';
                         [disabled]="checkItemAlreadyExist()"
                         (click)="addItem()"
                         class="mt-2 w-full btn btn-primary"
+                        appClickLogger
+                        [logMessage]="'Añadido al carrito: ' + product()?.title"
                     >
                         <fa-icon [icon]="faCartShopping"></fa-icon>
                         Add to Cart

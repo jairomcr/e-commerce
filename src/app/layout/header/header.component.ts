@@ -7,8 +7,10 @@ import {
     faHeart,
     faStore,
 } from '@fortawesome/free-solid-svg-icons';
-import { ShoppingCartStore } from '../../state/shopping-cart.store';
-import { SearchFormComponent } from '../search-component/search-component';
+import { ShoppingCartStore } from '../../store/shopping-cart.store';
+import { SearchFormComponent } from '../../components/search-component/search-component';
+import { NgIf } from '@angular/common';
+import { CapitalizePipe } from '../../shared/pipes/capitalize.pipe';
 
 @Component({
     selector: 'app-header',
@@ -17,6 +19,8 @@ import { SearchFormComponent } from '../search-component/search-component';
         RouterLink,
         RouterLinkActive,
         SearchFormComponent,
+        NgIf,
+        CapitalizePipe
     ],
     template: `
         <header
@@ -79,6 +83,21 @@ import { SearchFormComponent } from '../search-component/search-component';
                         <option value="light">Light</option>
                         <option value="night">Night</option>
                     </select>
+                    <!-- Avatar del usuario si está logueado -->
+                    <div class="dropdown dropdown-end" *ngIf="isLoggedIn()">
+                        <div tabindex="0" role="button" class="avatar placeholder">
+                            <div class="bg-primary py-2 text-white rounded-full w-10 h-10 flex items-center justify-center text-lg font-semibold leading-none text-center">
+                                {{ getUserInitial() | capitalize }}
+                            </div>
+                        </div>
+
+                        <ul
+                            tabindex="0"
+                            class="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-40"
+                        >
+                            <li><a (click)="logout()">Cerrar sesión</a></li>
+                        </ul>
+                    </div>
                 </div>
                 <div class="block lg:hidden dropdown dropdown-end">
                     <div tabindex="0" role="button" class="btn m-1">
@@ -175,4 +194,19 @@ export class HeaderComponent {
             activeClass: 'active-link',
         },
     ];
+    isLoggedIn(): boolean {
+        return localStorage.getItem('logged') === 'true';
+    }
+      
+    getUserInitial(): string {
+        const email = localStorage.getItem('userEmail')?.trim() ?? '';
+        return email ? email.charAt(0).toUpperCase() : '?';
+    }
+      
+    logout() {
+        localStorage.removeItem('logged');
+        localStorage.removeItem('userEmail');
+        location.reload(); 
+      }
+      
 }

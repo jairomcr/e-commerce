@@ -6,7 +6,7 @@ import {
     signal,
     viewChild,
 } from '@angular/core';
-import { ShoppingCartStore } from '../../state/shopping-cart.store';
+import { ShoppingCartStore } from '../../store/shopping-cart.store';
 import {
     faCheckCircle,
     faExclamationCircle,
@@ -16,7 +16,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { Router, RouterLink } from '@angular/router';
-import { PaymentInfoLocalStorageService } from '../../services/payment-info-local-storage.service';
+import { PaymentInfoLocalStorageService } from '../../core/services/payment-info-local-storage.service';
 import { PaymentInfoData } from '../../../type';
 import { ShoppingCartItemComponent } from '../../components/shopping-cart-item/shopping-cart-item.component';
 import { Meta, Title } from '@angular/platform-browser';
@@ -332,4 +332,12 @@ export class ShoppingCartComponent {
             [field]: target.value,
         });
     }
+    formIsDirty() {
+        return this.paymentInfoData()?.cardNumber ||
+               this.paymentInfoData()?.cvv ||
+               this.paymentInfoData()?.expirationDate ||
+               this.paymentInfoData()?.nameOnCard ||
+               this.paymentInfoData()?.address;
+      }
+      
 }

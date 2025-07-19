@@ -8,7 +8,7 @@ import {
     signal,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ApiService } from '../../services/api-rx.service';
+import { ApiService } from '../../core/services/api-rx.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {
     faCartShopping,
@@ -16,12 +16,12 @@ import {
     faChevronRight,
     faHeart,
 } from '@fortawesome/free-solid-svg-icons';
-import { ShoppingCartStore } from '../../state/shopping-cart.store';
+import { ShoppingCartStore } from '../../store/shopping-cart.store';
 import { ProductCardComponent } from '../../components/product-card/product-card.component';
 import { ProductCardSkeletonComponent } from '../../components/product-card-skeleton/product-card-skeleton.component';
 import { Meta, Title } from '@angular/platform-browser';
-import { FavoriteItemsStore } from '../../state/favorite-items.store';
-import { FooterComponent } from '../../components/footer/footer.component';
+import { FavoriteItemsStore } from '../../store/favorite-items.store';
+import { FooterComponent } from '../../layout/footer/footer.component';
 import { Product } from '../../../type';
 
 @Component({

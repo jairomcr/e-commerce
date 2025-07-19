@@ -2,7 +2,7 @@ import { Component, inject, input } from '@angular/core';
 import { Product } from '../../../type';
 import { faMinus, faPlus, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { ShoppingCartStore } from '../../state/shopping-cart.store';
+import { ShoppingCartStore } from '../../store/shopping-cart.store';
 
 @Component({
     selector: 'app-shopping-cart-item',

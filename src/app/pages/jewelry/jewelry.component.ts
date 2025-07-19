@@ -1,11 +1,11 @@
 import { Component, computed, inject, resource } from '@angular/core';
-import { ApiService } from '../../services/api-rx.service';
+import { ApiService } from '../../core/services/api-rx.service';
 import { ProductCardComponent } from '../../components/product-card/product-card.component';
 import { ProductCardSkeletonComponent } from '../../components/product-card-skeleton/product-card-skeleton.component';
 import { Meta, Title } from '@angular/platform-browser';
-import { FooterComponent } from '../../components/footer/footer.component';
+import { FooterComponent } from '../../layout/footer/footer.component';
 import { Product } from '../../../type';
-import { SearchParamsStore } from '../../state/search-params.store';
+import { SearchParamsStore } from '../../store/search-params.store';
 
 @Component({
     selector: 'app-jewelry',

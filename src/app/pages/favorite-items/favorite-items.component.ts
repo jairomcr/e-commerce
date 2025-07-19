@@ -1,8 +1,8 @@
 import { Component, computed, inject } from '@angular/core';
-import { FavoriteItemsStore } from '../../state/favorite-items.store';
+import { FavoriteItemsStore } from '../../store/favorite-items.store';
 import { ProductCardComponent } from '../../components/product-card/product-card.component';
 import { Meta, Title } from '@angular/platform-browser';
-import { FooterComponent } from '../../components/footer/footer.component';
+import { FooterComponent } from '../../layout/footer/footer.component';
 
 @Component({
     selector: 'app-favorite-items',
