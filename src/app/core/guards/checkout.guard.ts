@@ -1,6 +1,7 @@
 import { CanDeactivateFn } from '@angular/router';
+import { FormGuardAwareComponent } from './unsaved-form.guard';
 
-export const checkoutGuard: CanDeactivateFn<any> = (component) => {
+export const checkoutGuard: CanDeactivateFn<FormGuardAwareComponent> = (component) => {
   const hasUnsavedData =
     typeof component?.formIsDirty === 'function' && component.formIsDirty();
 

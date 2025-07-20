@@ -3,11 +3,13 @@ import {
   FormBuilder,
   ReactiveFormsModule,
   Validators,
+  FormControl
 } from '@angular/forms';
 import { SearchParamsStore } from '../../store/search-params.store';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faEllipsis } from '@fortawesome/free-solid-svg-icons';
 import { NgIf, NgStyle } from '@angular/common';
+
 
 @Component({
   selector: 'app-search-form',
@@ -94,11 +96,16 @@ export class SearchFormComponent {
   showDropdown = false;
   faEllipsis = faEllipsis;
 
-  form = this.fb.group({
-    title: ['', [Validators.required, Validators.minLength(3)]],
-    minPrice: [null],
-    maxPrice: [null],
-  });
+  form = this.fb.group<{
+  title: FormControl<string>;
+  minPrice: FormControl<number | null>;
+  maxPrice: FormControl<number | null>;
+}>({
+  title: this.fb.control('', { nonNullable: true, validators: [Validators.required, Validators.minLength(3)] }),
+  minPrice: this.fb.control<number | null>(null),
+  maxPrice: this.fb.control<number | null>(null),
+});
+
 
   toggleDropdown() {
     this.showDropdown = !this.showDropdown;

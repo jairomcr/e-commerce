@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Product } from '../../../type';
 import { Observable, forkJoin, mergeMap, catchError, of, map } from 'rxjs';
 
+
 @Injectable({ providedIn: 'root' })
 export class ApiService {
     private readonly API_URL = 'https://fakestoreapi.com';
@@ -19,7 +20,7 @@ export class ApiService {
     }
 
     // Get products details by ID
-    getProductsDetails(category?: string): Observable<Product[]> {
+    getProductsDetails(category?: string): Observable<(Product & { details: Product })[]>  {
         return this.getProducts(category).pipe(
             mergeMap((products) =>
                 forkJoin(
